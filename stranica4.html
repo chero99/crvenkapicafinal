@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+	<title>Untitled</title>
+<!--Adobe Edge Runtime-->
+    <script type="text/javascript" charset="utf-8" src="stranica4_edgePreload.js"></script>
+    <style>
+        .edgeLoad-EDGE-1207506893 { visibility:hidden; }
+    </style>
+<!--Adobe Edge Runtime End-->
+	
+	<script type="text/javascript" src="phonegap.js"></script>
+    <script type="text/javascript">   
+		var backgroundSound 	= "background_sound.mp3";
+		var storySound				= "stranica4.mp3";
+		
+		
+		/* Don't change anything after this */
+		var bgSound = null;
+		var storyStatus = 0;
+		function onLoad() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+		}
+	   
+		function storyPlay(){
+			if(storyStatus === 1){
+				story.pause();
+				storyStatus = 0;				
+				document.getElementById("Stage_button_play__button_play").style.backgroundImage='url("images/button_play.png")';
+			} else if (storyStatus === 0){
+				story.play();
+				storyStatus = 1;
+				document.getElementById("Stage_button_play__button_play").style.backgroundImage='url("images/button_pause.png")';
+			}
+		}
+		
+		function storyStop(){
+			story.stop();
+			storyStatus = 0;	
+			document.getElementById("Stage_button_play__button_play").style.backgroundImage='url("images/button_play.png")';			
+		}
+	   
+		function onDeviceReady(){
+			bgSound = new Media("/android_asset/www/audio/"+backgroundSound, null, null, loop);
+			bgSound.play();
+			story = new Media("/android_asset/www/audio/"+storySound, null, null);
+		}
+		
+		function reloadAudio(){
+			if (bgSound != null) {
+				bgSound.release();
+				bgSound = new Media("/android_asset/www/audio/"+backgroundSound, null, null, loop);
+				bgSound.play();
+			}
+		}
+		
+	    function loop(status) {
+			if( status == Media.MEDIA_STOPPED ) {
+				reloadAudio();
+			}
+		}
+	</script>
+	
+</head>
+<body  style="margin:0;padding:0;" onload="onLoad()">
+	<div id="Stage" class="EDGE-1207506893">
+	</div>
+  </body>
+</html>
